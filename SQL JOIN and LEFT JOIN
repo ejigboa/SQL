@@ -14,6 +14,25 @@ where r.name = 'Midwest'
 order by a.name;
 
 #Provide a table that provides the region for each sales_rep along with their associated accounts. 
+#This time only for accounts where the sales rep has a first name starting with S and in the Midwest region 
+#Your final table should include three columns: the region name, the sales rep name, and the account name. 
+#Sort the accounts alphabetically (A-Z) according to account name.
+
+
+select r.name as region_name, s.name as sale_rep_name,
+a.name as account_name 
+from region r
+join sales_reps s
+on s.region_id = r.id
+join accounts a 
+on s.id = a.sales_rep_id
+where r.name = 'Midwest'
+and name like 'S%'
+order by a.name;
+
+
+
+#Provide a table that provides the region for each sales_rep along with their associated accounts. 
 #This time only for accounts where the sales rep has a last name starting with K and in the Midwest region. 
 #Your final table should include three columns: the region name, the sales rep name, and the account name. 
 #Sort the accounts alphabetically (A-Z) according to account name.
@@ -29,3 +48,22 @@ on s.id = a.sales_rep_id
 where r.name = 'Midwest'
 and name like '% K%'
 order by a.name;
+
+
+#Provide the name for each region for every order, as well as the account name and the unit price they paid (total_amt_usd/total) for the order. 
+#However, you should only provide the results if the standard order quantity exceeds 100
+#Your final table should have 3 columns: region name, account name, and unit price
+#In order to avoid a division by zero error, adding .01 to the denominator here is helpful total_amt_usd/(total+0.01).
+
+
+select r.name as region_name, 
+a.name as account_name,
+o.total_amt_usd/(o.total+0.01) as unit_price
+from accounts a
+join orders o
+on a.id = o.account_id
+join sales_reps s
+on s.id = a.sales_rep_id
+join region r
+on s.region_id = r.id
+where standard_qty > 100;
