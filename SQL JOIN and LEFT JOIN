@@ -18,3 +18,14 @@ order by a.name;
 #Your final table should include three columns: the region name, the sales rep name, and the account name. 
 #Sort the accounts alphabetically (A-Z) according to account name.
 
+
+select r.name as region_name, s.name as sale_rep_name,
+a.name as account_name 
+from region r
+join sales_reps s
+on s.region_id = r.id
+join accounts a 
+on s.id = a.sales_rep_id
+where r.name = 'Midwest'
+and name like '% K%'
+order by a.name;
