@@ -31,7 +31,9 @@ group by account_name
 order by Minimun_order; 
 
 
-/*Determine the number of times a particular channel was used in the web_events table for each region. Your final table should have three columns - the region name, the channel, and the number of occurrences. Order your table with the highest number of occurrences first.*/
+/*Determine the number of times a particular channel was used in the web_events table for each region. 
+Your final table should have three columns - the region name, the channel, and the number of occurrences. 
+Order your table with the highest number of occurrences first.*/
 
 
 select r.name as Region, w.channel as Channel, count(w.channel) as No_Of_Occurrences
