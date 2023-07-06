@@ -1,1 +1,14 @@
+/*Find the total amount of poster_qty paper ordered in the orders table.*/
 
+select count(poster_qty) from orders;
+
+/*Find the total amount spent on standard_amt_usd and gloss_amt_usd paper for each order in the orders table. 
+This should give a dollar amount for each order in the table*/
+
+select
+account_id,
+sum(standard_amt_usd) as std_amount, 
+sum(gloss_amt_usd) as gl_amount
+from orders
+group by account_id 
+order by account_id;
