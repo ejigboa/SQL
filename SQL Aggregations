@@ -29,3 +29,18 @@ join accounts a
 on a.id = o.account_id
 group by account_name
 order by Minimun_order; 
+
+
+/*Determine the number of times a particular channel was used in the web_events table for each region. Your final table should have three columns - the region name, the channel, and the number of occurrences. Order your table with the highest number of occurrences first.*/
+
+
+select r.name as Region, w.channel as Channel, count(w.channel) as No_Of_Occurrences
+from web_events w
+join accounts a
+on w.account_id = a.id 
+join sales_reps s
+on s.id = a.sales_rep_id
+join region r
+on r.id = s.region_id
+group by w.channel, r.name
+order by  No_Of_Occurrences DESC;
