@@ -18,3 +18,14 @@ from orders;
 select occurred_at from orders
 order by occurred_at 
 limit 1;
+
+
+/*What was the smallest order placed by each account in terms of total usd. Provide only two columns - 
+the account name and the total usd. Order from smallest dollar amounts to largest.*/
+
+select a.name as account_name, min(total_amt_usd) as Minimun_order
+from orders o
+join accounts a
+on a.id = o.account_id
+group by account_name
+order by Minimun_order; 
