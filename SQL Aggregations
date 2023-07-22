@@ -46,3 +46,23 @@ join region r
 on r.id = s.region_id
 group by w.channel, r.name
 order by  No_Of_Occurrences DESC;
+
+---------DATE TIME STAMP -----------------------
+/*Which month did Parch & Posey have the greatest sales in terms of total dollars? Are all months evenly represented by the dataset?*/
+SELECT DATE_PART('month', occurred_at) ord_month, SUM(total_amt_usd) total_spent
+FROM orders
+WHERE occurred_at BETWEEN '2014-01-01' AND '2017-01-01'
+GROUP BY 1
+ORDER BY 2 DESC; 
+
+
+/*In which month of which year did Walmart spend the most on gloss paper in terms of dollars?*/
+
+SELECT DATE_TRUNC('month', o.occurred_at) ord_date, SUM(o.gloss_amt_usd) tot_spent
+FROM orders o 
+JOIN accounts a
+ON a.id = o.account_id
+WHERE a.name = 'Walmart'
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 1;
