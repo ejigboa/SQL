@@ -1,0 +1,11 @@
+/*find the average number of events a day for each channel.*/
+
+select channel, avg(noevent)
+	from
+	(select 
+		channel, date_trunc('day',occurred_at) as day, count(*) as 			noevent 
+		from web_events
+		group by 1,2 
+		order by 2
+     ) sub
+   group by channel;
