@@ -1,1 +1,15 @@
+/*Use the accounts table to create first and last name columns that hold the first and last names for the primary_poc.*/
 
+
+select 
+	primary_poc,  
+    LEFT(primary_poc, 
+         strpos(primary_poc,' ')) as 				First_name,
+    Right(primary_poc, 
+          length(primary_poc) - strpos(primary_poc,' '))
+          as last_name 
+from accounts;
+                                       
+                                       
+                                       
+                                       
