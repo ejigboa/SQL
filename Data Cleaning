@@ -1,3 +1,5 @@
+------- LOWER UPPER CONCAT STRPOS SUBSTR ----------------------C
+
 /*Use the accounts table to create first and last name columns that hold the first 
 and last names for the primary_poc.*/
 
@@ -10,7 +12,20 @@ select
           length(primary_poc) - strpos(primary_poc,' '))
           as last_name 
 from accounts;
+
+OR
+
+select 
+	primary_poc,  
+    LEFT(primary_poc, 
+         strpos(primary_poc,' ')) as First_name,
+    substr(primary_poc, strpos(primary_poc,' '))
+from accounts;
                                        
+                                       
+/*Each company in the accounts table wants to create an email address for each primary_poc. 
+The email address should be the first name of the primary_poc . last name primary_poc @ company name .com.*/
+                           
                                        
                                        
                                        
