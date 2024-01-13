@@ -1,0 +1,98 @@
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.1/Uploads/patients.csv'
+INTO TABLE sys.patients
+FIELDS TERMINATED BY ','    -- fields are separated by a comma
+ENCLOSED BY '"'             -- optional: fields enclosed by double-quotes
+LINES TERMINATED BY '\n';    -- lines are terminated by a newline
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.1/Uploads/MEDICAL_PROCEDURES.csv'
+INTO TABLE sys.MEDICAL_PROCEDURES
+FIELDS TERMINATED BY ','    -- fields are separated by a comma
+ENCLOSED BY '"'             -- optional: fields enclosed by double-quotes
+LINES TERMINATED BY '\n';    -- lines are terminated by a newline
+-- IGNORE 1 LINES;             -- optional: ignore the first line if it contains headers
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.1/Uploads/MEDICAL_HISTORY.csv'
+INTO TABLE sys.MEDICAL_HISTORY
+FIELDS TERMINATED BY ','    -- fields are separated by a comma
+ENCLOSED BY '"'             -- optional: fields enclosed by double-quotes
+LINES TERMINATED BY '\n';   -- lines are terminated by a newline
+-- IGNORE 1 LINES;             -- optional: ignore the first line if it contains headers
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.1/Uploads/MEDICAL_LOCATIONS.csv'
+INTO TABLE sys.MEDICAL_LOCATIONS
+FIELDS TERMINATED BY ','    -- fields are separated by a comma
+ENCLOSED BY '"'             -- optional: fields enclosed by double-quotes
+LINES TERMINATED BY '\n';    -- lines are terminated by a newline
+-- IGNORE 1 LINES;             -- optional: ignore the first line if it contains headers
+
+
+
+
+------- OR LOAD LOCAL DATA
+LOAD DATA LOCAL INFILE 'C:/Users/j/Documents/project/patients.csv'
+INTO TABLE sys.patients
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'             
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+
+
+SHOW VARIABLES LIKE 'secure_file_priv';  --- to show privileged directories
+
+ 
+--- truncate table patients;
+--- truncate table MEDICAL_PROCEDURES;
+--- truncate table MEDICAL_HISTORY;
+--- truncate table MEDICAL_LOCATIONS;
+
+
+select * from patients;
+select * from MEDICAL_PROCEDURES;
+select * from MEDICAL_HISTORY;
+select * from MEDICAL_LOCATIONS;
+
+
+---  USING GROUP BY AND HAVING FUNCTION
+
+-- TO GET THE DEPARTMRNT IDS THAT APPEARS MORE THAN ONCE
+SELECT  DEPT_ID, COUNT(1) 
+FROM MEDICAL_PROCEDURES
+GROUP BY DEPT_ID
+HAVING COUNT(DEPT_ID) = 2;
+
+--- TO GET THE DEPARTMENT ID THAT APPEARS THE MOST
+SELECT  DEPT_ID, COUNT(1) AS NUM
+FROM MEDICAL_PROCEDURES
+GROUP BY DEPT_ID
+ORDER BY NUM DESC
+LIMIT 1;
+
+---- GET THE PATIENT ID, NAME, SSN, PROCEDURE NAME AND PROCEDURE DATE FOR EACH PATIENT WHOSE NAME CONTAISN 'O'; 
+select P.PATIENT_ID, concat(P.FIRST_NAME, ' ', P.LAST_NAME) AS NAME, P.SSN, M.PROCEDURE_ID, M.PROCEDURE_NAME
+from patients P
+JOIN MEDICAL_PROCEDURES M
+ON P.PATIENT_ID = M.PATIENT_ID
+WHERE concat(P.FIRST_NAME, ' ', P.LAST_NAME) LIKE "%o%" ;
+
+
+--- get the names of patients and their next check up date, which is 10 days after procedure date
+select P.PATIENT_ID, concat(P.FIRST_NAME, ' ', P.LAST_NAME), M.PROCEDURE_DATE
+from patients P
+JOIN MEDICAL_PROCEDURES M
+ON P.PATIENT_ID = M.PATIENT_ID
+WHERE concat(P.FIRST_NAME, ' ', P.LAST_NAME) LIKE "%o%" ;
+
+---- CREATE a table thata shows just the procedure name and the procedure ID and name as PROCEDURES 
+SELECT * FROM 
+	(SELECT PROCEDURE_ID, PROCEDURE_NAME 
+			FROM MEDICAL_PROCEDURES) AS PROCEDURES;
+          
+ ---         OR       -----
+ 
+WITH PROCEDURESS AS
+	(SELECT PROCEDURE_ID, PROCEDURE_NAME 
+			FROM MEDICAL_PROCEDURES)
+            
+select * from PROCEDURESS;    
+
