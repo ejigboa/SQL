@@ -7,7 +7,7 @@ and last names for the primary_poc.*/
 select 
 	primary_poc,  
     LEFT(primary_poc, 
-         strpos(primary_poc,' ')) as 				First_name,
+         strpos(primary_poc,' ')) as First_name,
     Right(primary_poc, 
           length(primary_poc) - strpos(primary_poc,' '))
           as last_name 
@@ -22,10 +22,24 @@ select
     substr(primary_poc, strpos(primary_poc,' '))
 from accounts;
                                        
-                                       
-/*Each company in the accounts table wants to create an email address for each primary_poc. 
-The email address should be the first name of the primary_poc . last name primary_poc @ company name .com.*/
+
                            
                                        
                                        
-                                       
+#TO SPLIT A STRING, E.G FIRST AND LAST NAME, 
+column_name
+First_name, Last_name
+
+LEFT(column_name, strpos(column_name,' ')) as First_name
+
+
+#TO PRINT A STRING
+CONCAT(column_name, " ", column_name) 
+
+#TO PRINT THE FIRST 'n' CHARACTERS
+LEFT(column_name, n)
+
+#TO PRINT THE LAST 'n' CHARACTERS
+RIGHT(column_name,n)
+
+#
